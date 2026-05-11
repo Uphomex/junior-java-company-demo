@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companydemo.mapper.AttendanceMapper">
+
+    <resultMap id="AttendanceResultMap" type="com.example.companydemo.entity.AttendanceRecord">
+        <id column="id" property="id"/>
+        <result column="employee_id" property="employeeId"/>
+        <result column="work_date" property="workDate"/>
+        <result column="check_in_time" property="checkInTime"/>
+        <result column="check_out_time" property="checkOutTime"/>
+        <result column="status" property="status"/>
+        <result column="note" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <select id="findByEmployeeAndDate" resultMap="AttendanceResultMap">
+        SELECT id, employee_id, work_date, check_in_time, check_out_time, status, note, created_at, updated_at
+        FROM attendance_record
+        WHERE employee_id = #{employeeId}
+          AND work_date = #{workDate}
+    </select>
+
+    <select id="findByEmployeeAndDateRange" resultMap="AttendanceResultMap">
+        SELECT id, employee_id, work_date, check_in_time, check_out_time, status, note, created_at, updated_at
+        FROM attendance_record
+        WHERE employee_id = #{employeeId}
+          AND work_date BETWEEN #{startDate} AND #{endDate}
+        ORDER BY work_date DESC
+    </select>
+
+    <insert id="insert" parameterType="com.example.companydemo.entity.AttendanceRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO attendance_record (employee_id, work_date, check_in_time, status, note)
+        VALUES (#{employeeId}, #{workDate}, #{checkInTime}, #{status}, #{note})
+    </insert>
+
+    <update id="updateCheckOut" parameterType="com.example.companydemo.entity.AttendanceRecord">
+        UPDATE attendance_record
+        SET check_out_time = #{checkOutTime},
+            status = #{status},
+            note = #{note},
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+</mapper>
+

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companydemo.mapper.EmployeeMapper">
+
+    <resultMap id="EmployeeResultMap" type="com.example.companydemo.entity.Employee">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="position" property="position"/>
+        <result column="hire_date" property="hireDate"/>
+        <result column="salary" property="salary"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="BaseColumns">
+        id, name, phone, email, department_id, position, hire_date, salary, status, created_at, updated_at
+    </sql>
+
+    <select id="search" resultMap="EmployeeResultMap">
+        SELECT
+        <include refid="BaseColumns"/>
+        FROM employee
+        <where>
+            status = 1
+            <if test="keyword != null and keyword != ''">
+                AND (name LIKE CONCAT('%', #{keyword}, '%') OR phone LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="departmentId != null">
+                AND department_id = #{departmentId}
+            </if>
+        </where>
+        ORDER BY id DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(1)
+        FROM employee
+        <where>
+            status = 1
+            <if test="keyword != null and keyword != ''">
+                AND (name LIKE CONCAT('%', #{keyword}, '%') OR phone LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="departmentId != null">
+                AND department_id = #{departmentId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="EmployeeResultMap">
+        SELECT
+        <include refid="BaseColumns"/>
+        FROM employee
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPhone" resultMap="EmployeeResultMap">
+        SELECT
+        <include refid="BaseColumns"/>
+        FROM employee
+        WHERE phone = #{phone}
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.example.companydemo.entity.Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee (name, phone, email, department_id, position, hire_date, salary, status)
+        VALUES (#{name}, #{phone}, #{email}, #{departmentId}, #{position}, #{hireDate}, #{salary}, #{status})
+    </insert>
+
+    <update id="update" parameterType="com.example.companydemo.entity.Employee">
+        UPDATE employee
+        SET name = #{name},
+            phone = #{phone},
+            email = #{email},
+            department_id = #{departmentId},
+            position = #{position},
+            hire_date = #{hireDate},
+            salary = #{salary},
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+          AND status = 1
+    </update>
+
+    <update id="disable">
+        UPDATE employee
+        SET status = 0,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+          AND status = 1
+    </update>
+</mapper>
+

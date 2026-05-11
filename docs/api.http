@@ -1,0 +1,70 @@
+### 查询部门
+GET http://localhost:8080/api/departments
+
+### 新增部门
+POST http://localhost:8080/api/departments
+Content-Type: application/json
+
+{
+  "code": "QA",
+  "name": "质量保障部"
+}
+
+### 分页查询员工
+GET http://localhost:8080/api/employees?pageNum=1&pageSize=10&keyword=张
+
+### 查询员工详情
+GET http://localhost:8080/api/employees/1
+
+### 新增员工
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "赵六",
+  "phone": "13900000006",
+  "email": "zhaoliu@example.com",
+  "departmentId": 1,
+  "position": "Java开发工程师",
+  "hireDate": "2026-05-11",
+  "salary": 12000
+}
+
+### 修改员工
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+  "name": "张三",
+  "phone": "13900000001",
+  "email": "zhangsan@example.com",
+  "departmentId": 1,
+  "position": "高级Java开发工程师",
+  "hireDate": "2024-03-01",
+  "salary": 18000
+}
+
+### 员工离职
+DELETE http://localhost:8080/api/employees/3
+
+### 上班打卡
+POST http://localhost:8080/api/attendance/check-in
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "note": "到公司"
+}
+
+### 下班打卡
+POST http://localhost:8080/api/attendance/check-out
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "note": "正常下班"
+}
+
+### 查询考勤
+GET http://localhost:8080/api/attendance?employeeId=1&startDate=2026-05-01&endDate=2026-05-31
+

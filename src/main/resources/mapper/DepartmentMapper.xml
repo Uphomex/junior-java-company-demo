@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companydemo.mapper.DepartmentMapper">
+
+    <resultMap id="DepartmentResultMap" type="com.example.companydemo.entity.Department">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <select id="findAllActive" resultMap="DepartmentResultMap">
+        SELECT id, code, name, status, created_at, updated_at
+        FROM department
+        WHERE status = 1
+        ORDER BY id
+    </select>
+
+    <select id="findById" resultMap="DepartmentResultMap">
+        SELECT id, code, name, status, created_at, updated_at
+        FROM department
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByCode" resultMap="DepartmentResultMap">
+        SELECT id, code, name, status, created_at, updated_at
+        FROM department
+        WHERE code = #{code}
+    </select>
+
+    <insert id="insert" parameterType="com.example.companydemo.entity.Department" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO department (code, name, status)
+        VALUES (#{code}, #{name}, #{status})
+    </insert>
+
+    <select id="countActiveEmployees" resultType="int">
+        SELECT COUNT(1)
+        FROM employee
+        WHERE department_id = #{id}
+          AND status = 1
+    </select>
+</mapper>
+
