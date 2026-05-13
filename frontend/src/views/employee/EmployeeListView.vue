@@ -31,7 +31,7 @@ async function fetchList() {
   loading.value = true
   try {
     const result = await employeeApi.page(query)
-    list.value = result.list
+    list.value = result.records
     total.value = result.total
   } finally {
     loading.value = false

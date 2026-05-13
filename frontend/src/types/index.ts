@@ -69,7 +69,7 @@ export interface PageResult<T> {
   total: number
   pageNum: number
   pageSize: number
-  list: T[]
+  records: T[]
 }
 
 export interface EmployeePageQuery {

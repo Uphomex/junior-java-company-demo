@@ -37,7 +37,7 @@ const STATUS_LABEL: Record<number, { text: string; tag: '' | 'success' | 'warnin
 
 async function loadEmployees() {
   const result = await employeeApi.page({ pageNum: 1, pageSize: 50 })
-  employees.value = result.list
+  employees.value = result.records
   if (!form.employeeId && employees.value.length > 0) {
     form.employeeId = employees.value[0].id
   }
