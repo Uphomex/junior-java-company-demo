@@ -5,3 +5,17 @@ logs/
 .DS_Store
 *.log
 
+# Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vscode/*
+!.vscode/extensions.json
+
+# Misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
