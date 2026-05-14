@@ -49,7 +49,8 @@ junior-java-company-demo/
 └── docs/
     ├── api.http             后端接口测试样例
     ├── 从0到1实操指南.md     后端单体精读（前身资料）
-    └── 教学/                 全栈手把手教学 12 章（推荐入口）
+    ├── 教学/                 全栈手把手教学 12 章（推荐入口）
+    └── 测试/                 全栈端到端测试报告（含视频和截图）
 ```
 
 教学文档清单（推荐入口）：[docs/教学/00-总览](./docs/%E6%95%99%E5%AD%A6/00-%E6%80%BB%E8%A7%88-%E6%80%8E%E4%B9%88%E8%AF%BB%E8%BF%99%E4%BB%BD%E8%B5%84%E6%96%99.md)
@@ -141,6 +142,8 @@ mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 mvn test                  # 后端单元测试
 cd frontend && pnpm build # 前端类型检查 + 构建
 ```
+
+完整的端到端测试报告（含演示视频和 7 条断言）：[docs/测试/E2E测试报告](./docs/%E6%B5%8B%E8%AF%95/E2E%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A.md)
 
 ## 给完全的新手
 
